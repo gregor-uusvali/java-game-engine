@@ -44,7 +44,7 @@ public class Display extends Canvas implements Runnable {
         game.start();
     }
 
-    public void run() {
+    public synchronized void run() {
         while (running) {
             tick();
             render();
