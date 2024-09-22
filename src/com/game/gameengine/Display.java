@@ -16,10 +16,10 @@ public class Display extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean running = false;
-    private Render render;
     private Screen screen;
     private BufferedImage img;
     private int[] pixels;
+    private int fps;
 
     public Display() {
         screen = new Screen(WIDTH, HEIGHT);
@@ -45,9 +45,36 @@ public class Display extends Canvas implements Runnable {
     }
 
     public synchronized void run() {
+        int frames = 0;
+        double unprocessedSeconds = 0;
+        long prevTime = System.nanoTime();
+        double secondsPerTick = 1 /60.0;
+        int tickCount = 0;
+        boolean ticked = false;
+
         while (running) {
-            tick();
+            long currentTime = System.nanoTime();
+            long passedTime = currentTime - prevTime;
+            prevTime = currentTime;
+            unprocessedSeconds += passedTime / 1000000000.0;
+            while (unprocessedSeconds > secondsPerTick) {
+                tick();
+                unprocessedSeconds -= secondsPerTick;
+                ticked = true;
+                tickCount++;
+                if (tickCount % 60 == 0) {
+//                    System.out.println(frames + " FPS");
+                    prevTime += 1000;
+                    fps = frames;
+                    frames = 0;
+                }
+            }
+            if (ticked) {
+                render();
+                frames++;
+            }
             render();
+            frames++;
         }
     }
 
@@ -65,6 +92,8 @@ public class Display extends Canvas implements Runnable {
         }
         Graphics g = bs.getDrawGraphics();
         g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
+        g.setColor(Color.CYAN);
+        g.drawString(fps + " FPS", 5, 15);
         g.dispose();
         bs.show();
     }
