@@ -20,7 +20,7 @@ public class Render {
                 int xPix = x + xOffset;
                 if (xPix < 0 || xPix >= width) continue;
 
-                int  alpha = render.pixels[x + y * render.width];
+                int alpha = render.pixels[x + y * render.width];
                 if (alpha > 0) pixels[xPix + yPix * width] = alpha;
             }
         }

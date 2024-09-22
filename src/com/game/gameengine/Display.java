@@ -20,23 +20,28 @@ public class Display extends Canvas implements Runnable {
     private BufferedImage img;
     private int[] pixels;
     private int fps;
+    private Game game;
 
     public Display() {
+        Dimension size = new Dimension(WIDTH, HEIGHT);
+        setPreferredSize(size);
+        setMinimumSize(size);
+        setMaximumSize(size);
+        game = new Game();
         screen = new Screen(WIDTH, HEIGHT);
         img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        pixels = ((DataBufferInt)img.getRaster().getDataBuffer()).getData();
+        pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
     }
 
     public static void main(String[] args) {
         Display game = new Display();
         JFrame frame = new JFrame();
         frame.add(game);
-        frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
         frame.setTitle(TITLE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
+        frame.pack();
         frame.setVisible(true);
 
         System.out.println("Running...");
@@ -48,7 +53,7 @@ public class Display extends Canvas implements Runnable {
         int frames = 0;
         double unprocessedSeconds = 0;
         long prevTime = System.nanoTime();
-        double secondsPerTick = 1 /60.0;
+        double secondsPerTick = 1 / 60.0;
         int tickCount = 0;
         boolean ticked = false;
 
@@ -63,7 +68,6 @@ public class Display extends Canvas implements Runnable {
                 ticked = true;
                 tickCount++;
                 if (tickCount % 60 == 0) {
-//                    System.out.println(frames + " FPS");
                     prevTime += 1000;
                     fps = frames;
                     frames = 0;
@@ -85,9 +89,9 @@ public class Display extends Canvas implements Runnable {
             return;
         }
 
-        screen.render();
+        screen.render(game);
 
-        for(int i = 0; i < WIDTH * HEIGHT; i++) {
+        for (int i = 0; i < WIDTH * HEIGHT; i++) {
             pixels[i] = screen.pixels[i];
         }
         Graphics g = bs.getDrawGraphics();
@@ -99,7 +103,7 @@ public class Display extends Canvas implements Runnable {
     }
 
     private void tick() {
-
+        game.tick();
     }
 
     private void start() {
@@ -110,7 +114,7 @@ public class Display extends Canvas implements Runnable {
     }
 
     public void stop() {
-        if(!running) return;
+        if (!running) return;
         running = false;
         try {
             thread.join();
