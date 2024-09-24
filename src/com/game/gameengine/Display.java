@@ -2,6 +2,7 @@ package com.game.gameengine;
 
 import com.game.gameengine.graphics.Render;
 import com.game.gameengine.graphics.Screen;
+import com.game.gameengine.input.InputHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,16 +22,24 @@ public class Display extends Canvas implements Runnable {
     private int[] pixels;
     private int fps;
     private Game game;
+    private InputHandler input;
 
     public Display() {
         Dimension size = new Dimension(WIDTH, HEIGHT);
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
+
         game = new Game();
         screen = new Screen(WIDTH, HEIGHT);
         img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
+
+        input = new InputHandler();
+        addKeyListener(input);
+        addFocusListener(input);
+        addMouseListener(input);
+        addMouseMotionListener(input);
     }
 
     public static void main(String[] args) {
@@ -62,21 +71,25 @@ public class Display extends Canvas implements Runnable {
             long passedTime = currentTime - prevTime;
             prevTime = currentTime;
             unprocessedSeconds += passedTime / 1000000000.0;
+
             while (unprocessedSeconds > secondsPerTick) {
                 tick();
                 unprocessedSeconds -= secondsPerTick;
                 ticked = true;
                 tickCount++;
+
                 if (tickCount % 60 == 0) {
                     prevTime += 1000;
                     fps = frames;
                     frames = 0;
                 }
             }
+
             if (ticked) {
                 render();
                 frames++;
             }
+
             render();
             frames++;
         }
@@ -84,6 +97,7 @@ public class Display extends Canvas implements Runnable {
 
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
+
         if (bs == null) {
             createBufferStrategy(3);
             return;
@@ -103,7 +117,7 @@ public class Display extends Canvas implements Runnable {
     }
 
     private void tick() {
-        game.tick();
+        game.tick(input.key);
     }
 
     private void start() {

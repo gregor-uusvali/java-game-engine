@@ -41,7 +41,7 @@ public class Screen extends Render {
 //            int anim2 = (int) (Math.cos((game.time + i * 4) % 1000.0 / 100) * 100);
 //            draw(test, (width - 256) / 2 + anim, (height - 256) / 2 - anim2);
 //        }
-        render3d.floor();
+        render3d.floor(game);
         draw(render3d, 0,0);
     }
 }
