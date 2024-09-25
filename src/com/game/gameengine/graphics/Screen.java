@@ -42,6 +42,7 @@ public class Screen extends Render {
 //            draw(test, (width - 256) / 2 + anim, (height - 256) / 2 - anim2);
 //        }
         render3d.floor(game);
+        render3d.renderDistanceLimiter();
         draw(render3d, 0,0);
     }
 }
