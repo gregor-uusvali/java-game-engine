@@ -2,6 +2,9 @@ package com.game.gameengine.graphics;
 
 import com.game.gameengine.Game;
 
+import static com.game.gameengine.input.Controls.bopHeight;
+import static com.game.gameengine.input.Controls.walkBop;
+
 public class Render3D extends Render {
 
     public double[] zBuffer;
@@ -18,6 +21,8 @@ public class Render3D extends Render {
         double ceilingPosition = 8;
         double forward = game.controller.z; // forward and right demo game.time / 10.0;
         double right = game.controller.x;
+        double up = game.controller.y;
+        double walking = Math.sin(game.time / 6.0) * bopHeight;
 
         double rotation = game.controller.rotation;  // rotation demo game.time / 100.0;
         double cosine = Math.cos(rotation);
@@ -27,10 +32,10 @@ public class Render3D extends Render {
         for (int y = 0; y < height; y++) {
             double ceiling = (y - height / 2.0) / height;
 
-            double z = floorPosition / ceiling;
+            double z = (floorPosition + up + (walkBop ? walking : 0)) / ceiling;
 
             if (ceiling < 0) {
-                z = ceilingPosition / -ceiling;
+                z = (ceilingPosition - up - (walkBop ? walking : 0)) / -ceiling;
             }
 
             for (int x = 0; x < width; x++) {
