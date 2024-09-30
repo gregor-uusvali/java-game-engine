@@ -80,6 +80,7 @@ public class Display extends Canvas implements Runnable {
         int xDirection = 0;
 
         while (running) {
+            requestFocus();
             long currentTime = System.nanoTime();
             long passedTime = currentTime - prevTime;
             prevTime = currentTime;

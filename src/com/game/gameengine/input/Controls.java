@@ -19,7 +19,8 @@ public class Controls {
         if (back) zMove--;
         if (left) xMove--;
         if (right) xMove++;
-        if (forward || back || left || right || sprint) {
+        if (forward || back || left || right || sprint || crouch) {
+            bopHeight = 0.3;
             walkBop = true;
         } else {
             walkBop  = false;
@@ -33,15 +34,12 @@ public class Controls {
         if (crouch) {
             y -= crouchHeight;
             bopHeight = 0.2;
+            walkSpeed -= 0.3;
             sprint = false;
-        } else {
-            bopHeight = 0.3;
         }
         if (sprint) {
             walkSpeed += 0.5;
             bopHeight = 0.7;
-        } else {
-            bopHeight = 0.3;
         }
 
         x_a = (xMove * Math.cos(rotation) + zMove * Math.sin(rotation)) * walkSpeed;

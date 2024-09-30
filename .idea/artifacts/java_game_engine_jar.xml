@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="java-game-engine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/java_game_engine_jar</output-path>
+    <root id="archive" name="java-game-engine.jar">
+      <element id="module-output" name="java-game-engine" />
+      <element id="dir-copy" path="$PROJECT_DIR$/res" />
+      <element id="library" level="project" name="res" />
+    </root>
+  </artifact>
+</component>
