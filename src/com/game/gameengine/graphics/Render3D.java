@@ -2,6 +2,8 @@ package com.game.gameengine.graphics;
 
 import com.game.gameengine.Game;
 
+import java.util.Random;
+
 import static com.game.gameengine.input.Controls.bopHeight;
 import static com.game.gameengine.input.Controls.walkBop;
 
@@ -18,7 +20,7 @@ public class Render3D extends Render {
     public void floor(Game game) {
 
         double floorPosition = 8;
-        double ceilingPosition = 8;
+        double ceilingPosition = 80;
         double forward = game.controller.z; // forward and right demo game.time / 10.0;
         double right = game.controller.x;
         double up = game.controller.y;
@@ -51,6 +53,19 @@ public class Render3D extends Render {
 //                if (z < 400) pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
             }
         }
+        Random random = new Random(100);
+        for (int i = 0; i < 10000; i++) {
+            double xx = random.nextDouble();
+            double yy = random.nextDouble();
+            double zz = 2;
+
+            int xPixel = (int) (xx / zz * height / 2 + width / 2);
+            int yPixel = (int) (yy / zz * height / 2 + height / 2);
+            if (xPixel >= 0 && yPixel >= 0 && xPixel < width && yPixel < height) {
+                pixels[xPixel + yPixel * width] = 0xfffff;
+            }
+        }
+
     }
 
     public void renderDistanceLimiter() {
