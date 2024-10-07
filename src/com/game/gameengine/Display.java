@@ -108,15 +108,12 @@ public class Display extends Canvas implements Runnable {
             render();
             frames++;
             if(InputHandler.MouseX > prevX) {
-//                System.out.println("right");
                 Controls.turnRight = true;
                 Controls.turnLeft = false;
             } else if (InputHandler.MouseX < prevX) {
-//                System.out.println("left");
                 Controls.turnLeft = true;
                 Controls.turnRight = false;
             } else {
-//                System.out.println("not moving");
                 Controls.turnLeft = false;
                 Controls.turnRight = false;
 

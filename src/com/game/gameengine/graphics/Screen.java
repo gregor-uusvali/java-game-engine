@@ -19,7 +19,7 @@ public class Screen extends Render {
         for (int i = 0; i < 256 * 256; i++) {
 //            test.pixels[i] = random.nextInt();
 //            alpha - transparent pixles
-            test.pixels[i] = random.nextInt() * (random.nextInt(5)/4);
+            test.pixels[i] = random.nextInt() * (random.nextInt(5) / 4);
         }
     }
 
@@ -43,6 +43,9 @@ public class Screen extends Render {
 //        }
         render3d.floor(game);
         render3d.renderDistanceLimiter();
-        draw(render3d, 0,0);
+        render3d.rednerWall(0, 0.5, 1.5, 0);
+        render3d.rednerWall(0, 0.5, 1.5, 0.5);
+
+        draw(render3d, 0, 0);
     }
 }
