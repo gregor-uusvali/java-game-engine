@@ -104,9 +104,9 @@ public class Display extends Canvas implements Runnable {
                 frames++;
             }
 
-
             render();
             frames++;
+
             if(InputHandler.MouseX > prevX) {
                 Controls.turnRight = true;
                 Controls.turnLeft = false;
@@ -116,9 +116,8 @@ public class Display extends Canvas implements Runnable {
             } else {
                 Controls.turnLeft = false;
                 Controls.turnRight = false;
-
-
             }
+
             prevX = InputHandler.MouseX;
             prevY = InputHandler.MouseY;
         }

@@ -23,17 +23,18 @@ public class Controls {
             bopHeight = 0.3;
             walkBop = true;
         } else {
-            walkBop  = false;
+            walkBop = false;
         }
         if (turnLeft) rotation_a -= rotationSpeed;
         if (turnRight) rotation_a += rotationSpeed;
         if (jump) {
             y += jumpHeight;
             sprint = false;
+            walkBop = false;
         }
         if (crouch) {
             y -= crouchHeight;
-            bopHeight = 0.2;
+            bopHeight = ((forward || back || left || right) && crouch) ? 0.2 : 0;
             walkSpeed -= 0.3;
             sprint = false;
         }

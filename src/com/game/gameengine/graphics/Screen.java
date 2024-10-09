@@ -32,9 +32,9 @@ public class Screen extends Render {
 //        }
 //
 //        Remove trailing pixles
-//        for (int i = 0; i < width * height; i++) {
-//            pixels[i] = 0;
-//        }
+        for (int i = 0; i < width * height; i++) {
+            pixels[i] = 0;
+        }
 //
 //        for (int i = 0; i < 30; i++) {
 //            int anim = (int) (Math.sin((game.time + i * 4) % 1000.0 / 100) * 100);
@@ -42,9 +42,11 @@ public class Screen extends Render {
 //            draw(test, (width - 256) / 2 + anim, (height - 256) / 2 - anim2);
 //        }
         render3d.floor(game);
+        render3d.renderWall(0.5, 1, 1.5, 1.5, 0);
+        render3d.renderWall(0.5, 0.5, 1, 1.5, 0 );
+        render3d.renderWall(0.5, 1, 1, 1, 0);
+        render3d.renderWall(1, 1, 1, 1.5, 0 );
         render3d.renderDistanceLimiter();
-        render3d.rednerWall(0, 0.5, 1.5, 0);
-        render3d.rednerWall(0, 0.5, 1.5, 0.5);
 
         draw(render3d, 0, 0);
     }
