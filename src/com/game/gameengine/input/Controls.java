@@ -1,5 +1,7 @@
 package com.game.gameengine.input;
 
+import com.game.gameengine.Display;
+
 public class Controls {
     public double x, y, z, rotation, x_a, z_a, rotation_a;
     public static boolean turnLeft = false;
@@ -8,7 +10,7 @@ public class Controls {
     public static double bopHeight = 0.3;
 
     public void tick(boolean forward, boolean back, boolean left, boolean right, boolean jump, boolean crouch, boolean sprint) {
-        double rotationSpeed = 0.025;
+        double rotationSpeed = 0.002  * Display.MouseSpeed;
         double walkSpeed = 0.5;
         double jumpHeight = 0.5;
         double crouchHeight = 0.33;

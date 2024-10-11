@@ -7,6 +7,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
     public boolean[] key = new boolean[68836];
     public static int MouseX;
     public static int MouseY;
+    public static int MouseBtn;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -40,7 +41,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        MouseBtn = e.getButton();
     }
 
     @Override

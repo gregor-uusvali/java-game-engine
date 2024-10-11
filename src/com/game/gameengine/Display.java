@@ -30,6 +30,8 @@ public class Display extends Canvas implements Runnable {
     private int prevX = 0;
     private int prevY = 0;
 
+    public static int MouseSpeed;
+
     public Display() {
         Dimension size = new Dimension(WIDTH, HEIGHT);
         setPreferredSize(size);
@@ -57,9 +59,11 @@ public class Display extends Canvas implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setCursor(blank);
         frame.setTitle(TITLE);
+
+        GraphicsEnvironment graphicsenvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
-        frame.pack();
         frame.setVisible(true);
 
         System.out.println("Running...");
@@ -118,6 +122,7 @@ public class Display extends Canvas implements Runnable {
                 Controls.turnRight = false;
             }
 
+            MouseSpeed = Math.abs(InputHandler.MouseX - prevX);
             prevX = InputHandler.MouseX;
             prevY = InputHandler.MouseY;
         }

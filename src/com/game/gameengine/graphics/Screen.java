@@ -42,10 +42,16 @@ public class Screen extends Render {
 //            draw(test, (width - 256) / 2 + anim, (height - 256) / 2 - anim2);
 //        }
         render3d.floor(game);
-        render3d.renderWall(0.5, 1, 1.5, 1.5, 0);
+        render3d.renderWall(0, 0.5, 1.5, 1.5, 0);
+        render3d.renderWall(0, 0, 1, 1.5, 0 );
+        render3d.renderWall(0, 0.5, 1, 1, 0);
         render3d.renderWall(0.5, 0.5, 1, 1.5, 0 );
-        render3d.renderWall(0.5, 1, 1, 1, 0);
-        render3d.renderWall(1, 1, 1, 1.5, 0 );
+
+        // Homework
+        render3d.renderWall(0.5, 0, 1.5, 1.5, 0);
+        render3d.renderWall(0.0, 0.5, 1.0, 1.0, 0);
+        render3d.renderWall(.5, .5, 1.0, 1.5, 0);
+        render3d.renderWall(0, 0, 1.5, 1.0, 0);
         render3d.renderDistanceLimiter();
 
         draw(render3d, 0, 0);

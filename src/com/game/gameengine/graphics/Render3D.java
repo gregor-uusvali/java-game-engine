@@ -29,7 +29,6 @@ public class Render3D extends Render {
         cosine = Math.cos(rotation);
         sine = Math.sin(rotation);
 
-
         for (int y = 0; y < height; y++) {
             double ceiling = (y + -height / 2.0) / height;
 
@@ -47,7 +46,7 @@ public class Render3D extends Render {
                 int xPix = (int) (xx + side);
                 int yPix = (int) (yy + forward);
                 zBuffer[x + y * width] = z;
-                pixels[x + y * width] = Texture.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
+                pixels[x + y * width] = Texture.tex.pixels[(xPix & 7) + (yPix & 7) * 16];
 //                pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
 //                if (z < 400) pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
             }
@@ -55,13 +54,13 @@ public class Render3D extends Render {
     }
 
     public void renderWall(double xLeft, double xRight, double zDistanceLeft, double zDistanceRight, double yHeight) {
-        double upCorrect = 0.062;
-        double sideCorrect = 0.062;
-        double forwardCorrect = 0.062;
-        double walkCorrect = -0.062;
+        double upCorrect = 0.0625;
+        double sideCorrect = 0.0625;
+        double forwardCorrect = 0.0625;
+        double walkCorrect = -0.0625;
 
 
-        double xcLeft = ((xLeft) - (side * sideCorrect) ) * 2;
+        double xcLeft = ((xLeft) - (side * sideCorrect)) * 2;
         double zcLeft = ((zDistanceLeft) - (forward * forwardCorrect)) * 2;
 
         double rotLeftSideX = xcLeft * cosine - zcLeft * sine;
@@ -80,6 +79,28 @@ public class Render3D extends Render {
         double xPixelLeft = (rotLeftSideX / rotLeftSideZ * height + width / 2);
         double xPixelRight = (rotRightSideX / rotRightSideZ * height + width / 2);
 
+        double texture30 = 0;
+        double texture40 = 8;
+        double clip = 0.5;
+
+        if(rotLeftSideZ < clip && rotRightSideZ < clip) return;
+
+        if (rotLeftSideZ < clip) {
+            double clip0 = (clip - rotLeftSideZ) / (rotRightSideZ - rotLeftSideZ);
+            rotLeftSideZ = rotLeftSideZ + (rotRightSideZ - rotLeftSideZ) * clip0;
+            rotLeftSideX = rotLeftSideX + (rotRightSideX - rotLeftSideX) * clip0;
+            texture30 = texture30 + (texture40 - texture30) * clip0;
+
+        }
+
+        if (rotRightSideZ < clip) {
+            double clip0 = (clip - rotLeftSideZ) / (rotRightSideZ - rotLeftSideZ);
+            rotRightSideZ = rotLeftSideZ + (rotRightSideZ - rotLeftSideZ) * clip0;
+            rotRightSideX = rotLeftSideX + (rotRightSideX - rotLeftSideX) * clip0;
+            texture30 = texture30 + (texture40 - texture30) * clip0;
+
+        }
+
         if (xPixelLeft >= xPixelRight) return;
 
         int xPixelLeftInt = (int) xPixelLeft;
@@ -95,8 +116,8 @@ public class Render3D extends Render {
 
         double texture1 = 1 / rotLeftSideZ;
         double texture2 = 1 / rotRightSideZ;
-        double texture3 = 0 / rotLeftSideZ;
-        double texture4 = 8 / rotRightSideZ - texture3;
+        double texture3 = texture30 / rotLeftSideZ;
+        double texture4 = texture40 / rotRightSideZ - texture3;
 
         for (int x = xPixelLeftInt; x < xPixelRightInt; x++) {
             double pixelRotation = (x - xPixelLeft) / (xPixelRight - xPixelLeft);
@@ -116,7 +137,8 @@ public class Render3D extends Render {
 //                pixels[x + y * width] = 0xff5733;
                 double pixelRotationY = (y - yPixelTop) / (yPixelBottom - yPixelTop);
                 int yTexture = (int) (8 * pixelRotationY);
-                pixels[x + y * width] = xTexture * 100 + yTexture * 100;
+//                pixels[x + y * width] = xTexture * 100 + yTexture * 100;
+                pixels[x + y * width] = Texture.tex.pixels[((xTexture & 7) + 8) + (yTexture & 7) * 16];
                 zBuffer[x + y * width] = 1 / (texture1 + (texture2 - texture1) * pixelRotation) * 8;
             }
 
