@@ -4,6 +4,7 @@ import com.game.gameengine.graphics.Render;
 import com.game.gameengine.graphics.Screen;
 import com.game.gameengine.input.Controls;
 import com.game.gameengine.input.InputHandler;
+import com.game.gameengine.level.Level;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;

@@ -1,15 +1,18 @@
 package com.game.gameengine;
 
 import com.game.gameengine.input.Controls;
+import com.game.gameengine.level.Level;
 
 import java.awt.event.KeyEvent;
 
 public class Game {
     public int time;
     public Controls controller;
+    public Level level;
 
     public Game() {
         controller = new Controls();
+        level = new Level(20, 20);
 
     }
 
