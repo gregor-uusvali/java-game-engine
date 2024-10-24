@@ -62,7 +62,7 @@ public class Render3D extends Render {
         }
 
         Level level = game.level;
-        int size = 5;
+        int size = 40;
         for (int xBlock = -size; xBlock <= size; xBlock++) {
             for (int zBlock = -size; zBlock <= size; zBlock++) {
                 Block block = level.create(xBlock, zBlock);
@@ -97,7 +97,7 @@ public class Render3D extends Render {
                         renderWall(xBlock + 1, xBlock + 1, zBlock, zBlock + 1, 0.5);
                     }
                     if (!south.solid) {
-                        renderWall(xBlock + 1, xBlock, zBlock + 1, zBlock + 1, 0.);
+                        renderWall(xBlock + 1, xBlock, zBlock + 1, zBlock + 1, 0.5);
                     }
                 } else {
                     if (east.solid) {

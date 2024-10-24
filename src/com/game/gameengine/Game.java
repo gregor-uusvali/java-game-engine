@@ -12,7 +12,7 @@ public class Game {
 
     public Game() {
         controller = new Controls();
-        level = new Level(20, 20);
+        level = new Level(80, 28);
 
     }
 

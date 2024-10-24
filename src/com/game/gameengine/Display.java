@@ -52,24 +52,7 @@ public class Display extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) {
-        BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_4BYTE_ABGR);
-        Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0,0), "blank");
-        Display game = new Display();
-        JFrame frame = new JFrame();
-        frame.add(game);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setCursor(blank);
-        frame.setTitle(TITLE);
-
-        GraphicsEnvironment graphicsenvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
-
-        System.out.println("Running...");
-
-        game.start();
+        new Launcher();
     }
 
     public synchronized void run() {
@@ -154,7 +137,7 @@ public class Display extends Canvas implements Runnable {
         game.tick(input.key);
     }
 
-    private void start() {
+    public void start() {
         if (running) return;
         running = true;
         thread = new Thread(this);
