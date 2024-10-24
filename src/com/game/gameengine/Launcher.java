@@ -2,6 +2,8 @@ package com.game.gameengine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Launcher extends JFrame {
 
@@ -39,6 +41,12 @@ public class Launcher extends JFrame {
         play = new JButton("Play!");
         rplay = new Rectangle(width/2-btn_width/2, 20, btn_width, btn_height);
         play.setBounds(rplay);
+        play.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RunGame();
+            }
+        });
         window.add(play);
 
         options = new JButton("Options");
